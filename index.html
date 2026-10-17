@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZEITRISS – Ein historisches Kurzfilmprojekt (Olpe 1932–1945)</title>
+  <!-- Google Fonts: Cinzel für filmische Titel, Inter für Fließtext -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-deep: #070709;
+      --bg-surface: #121316;
+      --bg-surface-hover: #181a1f;
+      --text-primary: #EAE6DF;
+      --text-muted: #9A9A9E;
+      --accent-gold: #C59B27;
+      --accent-gold-dim: rgba(197, 155, 39, 0.35);
+      --accent-rust: #8C2D19;
+      --accent-rust-glow: rgba(140, 45, 25, 0.5);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --transition-smooth: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+    }
+
+    body {
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtiler Film-Grain-Overlay über der gesamten Seite */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.035;
+      background-image: radial-gradient(#ffffff 1px, transparent 0);
+      background-size: 3px 3px;
+    }
+
+    h1, h2, h3, .serif-title {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Goldene Trennlinie zwischen Sektionen */
+    .section-divider {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, var(--accent-gold-dim), transparent);
+      margin: 0 auto;
+    }
+
+    section {
+      padding: 6.5rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-eyebrow {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--accent-gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      color: var(--text-primary);
+    }
+
+    /* ================= NAVIGATION ================= */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(7, 7, 9, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 76px;
+    }
+
+    .brand-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--text-primary);
+    }
+
+    .brand-logo span {
+      color: var(--accent-gold);
+      font-weight: 400;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 0.3rem 0;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 1px;
+      background-color: var(--accent-gold);
+      transition: width 0.35s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* ================= HERO BEREICH ================= */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding-top: 80px;
+      background: 
+        radial-gradient(circle at 50% 35%, rgba(140, 45, 25, 0.14) 0%, rgba(197, 155, 39, 0.05) 35%, rgba(7, 7, 9, 0.98) 75%),
+        linear-gradient(180deg, #070709 0%, #0d0e12 50%, #070709 100%);
+    }
+
+    .hero-content {
+      max-width: 850px;
+      padding: 2rem;
+      animation: fadeInHero 1.4s ease-out forwards;
+    }
+
+    @keyframes fadeInHero {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .hero-title {
+      font-size: clamp(3.2rem, 8vw, 6.2rem);
+      letter-spacing: 0.22em;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .hero-years {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+      letter-spacing: 0.45em;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+      display: block;
+    }
+
+    .hero-slogan {
+      font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+      color: #c7c4be;
+      font-weight: 300;
+      font-style: italic;
+      max-width: 680px;
+      margin: 0 auto 3rem auto;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1.25rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Filmische Buttons mit Hover-Effekt */
+    .btn {
+      display: inline-block;
+      padding: 0.95rem 2.2rem;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 500;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-rust);
+      color: var(--text-primary);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(140, 45, 25, 0.3);
+    }
+
+    .btn-primary:hover {
+      background-color: #a6361f;
+      border-color: var(--accent-gold);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px var(--accent-rust-glow);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.02);
+      color: var(--text-primary);
+      border: 1px solid var(--accent-gold-dim);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(197, 155, 39, 0.12);
+      border-color: var(--accent-gold);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(197, 155, 39, 0.15);
+    }
+
+    /* ================= TRAILER SEKTION ================= */
+    .video-frame {
+      position: relative;
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      background-color: #0b0c0e;
+      border: 1px solid var(--accent-gold-dim);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(197, 155, 39, 0.06);
+      overflow: hidden;
+    }
+
+    .video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* 2-Klick Cookie Platzhalter für YouTube */
+    .video-consent-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: 
+        radial-gradient(circle at center, rgba(24, 26, 31, 0.88), rgba(7, 7, 9, 0.97)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 8px);
+      z-index: 2;
+    }
+
+    .play-icon-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--accent-gold);
+      font-size: 1.4rem;
+      transition: var(--transition-smooth);
+    }
+
+    .video-consent-placeholder:hover .play-icon-circle {
+      transform: scale(1.08);
+      background-color: rgba(197, 155, 39, 0.12);
+      box-shadow: 0 0 25px rgba(197, 155, 39, 0.25);
+    }
+
+    .video-consent-placeholder h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .video-consent-placeholder p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 540px;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ================= HANDLUNG (SYNOPSIS) ================= */
+    .synopsis-box {
+      max-width: 820px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(18, 19, 22, 0.7) 0%, rgba(10, 10, 13, 0.9) 100%);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--accent-gold);
+      padding: 3.5rem;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .synopsis-text {
+      font-size: 1.12rem;
+      color: #d8d5ce;
+      line-height: 1.9;
+      text-align: justify;
+    }
+
+    /* Initial-Buchstabe im Editorial-Stil */
+    .synopsis-text::first-letter {
+      font-family: 'Cinzel', serif;
+      float: left;
+      font-size: 3.6rem;
+      line-height: 0.85;
+      padding-right: 0.75rem;
+      padding-top: 0.2rem;
+      color: var(--accent-gold);
+    }
+
+    /* ================= CREW SEKTION ================= */
+    .crew-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .crew-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 2.8rem 2.4rem;
+      position: relative;
+      transition: var(--transition-smooth);
+      overflow: hidden;
+    }
+
+    .crew-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-rust));
+      opacity: 0.4;
+      transition: var(--transition-smooth);
+    }
+
+    .crew-card:hover {
+      transform: translateY(-6px);
+      background-color: var(--bg-surface-hover);
+      border-color: var(--accent-gold-dim);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    .crew-card:hover::before {
+      opacity: 1;
+    }
+
+    .crew-role {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--accent-gold);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .crew-name {
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .crew-bio {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      line-height: 1.75;
+    }
+
+    /* ================= GALERIE (BEHIND THE SCENES) ================= */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+    }
+
+    /* Platzhalter-Grafiken mit atmosphärischem Kino-Look (kann durch echte <img> ersetzt werden) */
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(85%) contrast(115%) brightness(0.72);
+      transform: scale(1);
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.65s ease;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7, 7, 9, 0.95) 0%, rgba(7, 7, 9, 0.35) 55%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.6rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: var(--transition-smooth);
+    }
+
+    .gallery-caption span {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .gallery-caption p {
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      font-weight: 400;
+    }
+
+    /* Galerie Hover-Effekte */
+    .gallery-item:hover {
+      border-color: var(--accent-gold-dim);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .gallery-item:hover .gallery-img {
+      filter: grayscale(0%) contrast(105%) brightness(0.95);
+      transform: scale(1.08);
+    }
+
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================= KONTAKT / CTA ================= */
+    .cta-box {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 4rem 2.5rem;
+      background: radial-gradient(circle at top, rgba(140, 45, 25, 0.16), var(--bg-surface) 70%);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .cta-box h3 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .cta-box p {
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2.5rem auto;
+    }
+
+    /* ================= IMPRESSUM & FOOTER ================= */
+    footer {
+      background-color: #040406;
+      border-top: 1px solid var(--border-subtle);
+      padding: 4.5rem 0 3rem 0;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-col h4 {
+      font-family: 'Cinzel', serif;
+      color: var(--text-primary);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.12em;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .cookie-reopen-link {
+      color: var(--accent-gold);
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      font: inherit;
+    }
+
+    .cookie-reopen-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* ================= COOKIE BANNER ================= */
+    .cookie-banner {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(150%);
+      width: calc(100% - 2rem);
+      max-width: 880px;
+      background-color: rgba(18, 19, 22, 0.96);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--accent-gold-dim);
+      padding: 1.75rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .cookie-banner.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .cookie-text {
+      flex: 1 1 420px;
+    }
+
+    .cookie-text h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .cookie-text p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .cookie-actions {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-sm {
+      padding: 0.7rem 1.35rem;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .synopsis-box {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand-logo">ZEITRISS <span>OLPE</span></a>
+      <ul class="nav-links">
+        <li><a href="#trailer">Trailer</a></li>
+        <li><a href="#handlung">Handlung</a></li>
+        <li><a href="#crew">Crew</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#impressum">Impressum</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 1. HERO-BEREICH -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Ein historisches Kurzfilmprojekt</span>
+      <h1 class="hero-title">ZEITRISS</h1>
+      <span class="hero-years">OLPE 1932 – 1945</span>
+      <p class="hero-slogan">
+        „Zwischen dem Aufbruch einer neuen Ära und der Asche des Frühjahrs 1945: Eine Spurensuche im Schatten der Erinnerung.“
+      </p>
+      <div class="btn-group">
+        <a href="#trailer" class="btn btn-primary">Trailer ansehen</a>
+        <a href="#handlung" class="btn btn-secondary">Über den Film</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 2. TRAILER-SEKTION -->
+  <section id="trailer">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Erste Einblicke</span>
+        <h2 class="section-title">Der Offizielle Trailer</h2>
+      </div>
+
+      <div class="video-frame" id="videoContainer">
+        <!-- 2-Klick-Cookie-Overlay: Wird entfernt, sobald externe Medien akzeptiert wurden -->
+        <div class="video-consent-placeholder" id="videoPlaceholder">
+          <div class="play-icon-circle">&#9658;</div>
+          <h3>Externer Video-Inhalt (YouTube)</h3>
+          <p>
+            Aus Datenschutzgründen wird dieser Trailer erst nach Ihrer Zustimmung geladen. 
+            Mit Klick auf „Video aktivieren“ stimmen Sie der Übertragung von Daten an YouTube (Google Ireland Limited) sowie dem Speichern von Cookies zu.
+          </p>
+          <button type="button" class="btn btn-primary btn-sm" id="enableVideoBtn">
+            Video aktivieren &amp; abspielen
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 3. HANDLUNG (SYNOPSIS) -->
+  <section id="handlung">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Synopsis</span>
+        <h2 class="section-title">Die Handlung</h2>
+      </div>
+
+      <div class="synopsis-box">
+        <p class="synopsis-text">
+          Olpe im Jahr 1932 ist eine Stadt im Umbruch – geprägt von alltäglichen Hoffnungen, vertrauten Gassen und der trügerischen Ruhe vor einem historischen Sturm. Doch die Zeit wirft bereits lange Schatten voraus, die unaufhaltsam auf den schicksalhaften Frühling des Jahres 1945 zusteuern. Als verheerende Bombenangriffe das historische Stadtbild innerhalb weniger Minuten in Schutt und Asche legen, zerreißt die gewohnte Welt für immer. <em>ZEITRISS</em> verwebt akribische historische Rekonstruktion mit einer eindringlichen, atmosphärischen Bildsprache zu einer Reise durch das kollektive Gedächtnis unserer Heimat. Der Kurzfilm macht das Unsichtbare wieder greifbar und stellt die zeitlose Frage, was von uns bleibt, wenn die Geschichte alles Bekannte auslöscht.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 4. CREW -->
+  <section id="crew">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Die Filmemacher</span>
+        <h2 class="section-title">Hinter der Kamera</h2>
+      </div>
+
+      <div class="crew-grid">
+        <!-- Karte 1: Lovis -->
+        <article class="crew-card">
+          <span class="crew-role">Regie, Kamera &amp; Visuelle Effekte</span>
+          <h3 class="crew-name">Lovis</h3>
+          <p class="crew-bio">
+            Mit einer tiefen Leidenschaft für historische Ästhetik, Vintage-Fotografie und modernes digitales Compositing formt Lovis die visuelle Identität von <em>ZEITRISS</em>. Sein Fokus liegt auf der Verschmelzung von authentischer Kameraführung und aufwendigen visuellen Effekten, um das historische Olpe der 1930er und 40er Jahre detailgetreu auf der Leinwand wiederauferstehen zu lassen.
+          </p>
+        </article>
+
+        <!-- Karte 2: Hannes -->
+        <article class="crew-card">
+          <span class="crew-role">Produktion, Konzeption &amp; Dramaturgie</span>
+          <h3 class="crew-name">Hannes</h3>
+          <p class="crew-bio">
+            Als kreativer Kopf hinter der narrativen Struktur und Organisation hält Hannes die dramaturgischen Fäden des Projekts zusammen. Mit einem scharfen Blick für historische Zusammenhänge und atmosphärisches Storytelling sorgt er dafür, dass aus archivarischen Fakten und Zeitzeugnissen eine packende, menschlich berührende Kinoerzählung entsteht.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 5. GALERIE (BEHIND THE SCENES) -->
+  <section id="galerie">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">Werkstattbericht</span>
+        <h2 class="section-title">Behind the Scenes</h2>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Bild 1 (Platzhalter-Bild URL einfach durch eigene Fotos ersetzen) -->
+        <div class="gallery-item">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=900&q=80" alt="Kamera und Lichtsetzung am Set">
+          <div class="gallery-caption">
+            <span>Set &amp; Kamera</span>
+            <p>Lichtsetzung am historischen Set – Atmosphäre durch natürliche Schatten.</p>
+          </div>
+        </div>
+
+        <!-- Bild 2 -->
+        <div class="gallery-item">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?auto=format&fit=crop&w=900&q=80" alt="Historische Requisiten 1932">
+          <div class="gallery-caption">
+            <span>Szenenbild 1932</span>
+            <p>Authentische Requisiten und zeitgenössische Kostüme im Detail.</p>
+          </div>
+        </div>
+
+        <!-- Bild 3 -->
+        <div class="gallery-item">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80" alt="Dreharbeiten an Originalschauplätzen">
+          <div class="gallery-caption">
+            <span>Dreharbeiten vor Ort</span>
+            <p>Auf den Spuren der Vergangenheit an ausgewählten Schauplätzen im Raum Olpe.</p>
+          </div>
+        </div>
+
+        <!-- Bild 4 -->
+        <div class="gallery-item">
+          <img class="gallery-img" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=900&q=80" alt="Postproduktion und VFX">
+          <div class="gallery-caption">
+            <span>Postproduktion &amp; VFX</span>
+            <p>Digitale Rekonstruktion – Die Verschmelzung von Archivmaterial und Film.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- 6. KONTAKT -->
+  <section id="kontakt">
+    <div class="container">
+      <div class="cta-box">
+        <span class="section-eyebrow">Kontakt &amp; Austausch</span>
+        <h3>Vorführungen &amp; Kooperationen</h3>
+        <p>
+          Sie planen eine kulturelle Veranstaltung, einen Themenabend zur Regionalgeschichte, ein Schulprojekt oder möchten <em>ZEITRISS</em> im Rahmen einer Sondervorführung präsentieren? Wir freuen uns über den Austausch mit Kultureinrichtungen, Vereinen, Bildungsträgern sowie Pressevertretern.
+        </p>
+        <!-- Hier gewünschte E-Mail-Adresse eintragen -->
+        <a href="mailto:kontakt@zeitriss-filmprojekt.de?subject=Anfrage%20zum%20ZEITRISS-Filmprojekt" class="btn btn-primary">
+          Anfrage senden
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. IMPRESSUM & FOOTER -->
+  <footer id="impressum">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Impressum</h4>
+          <p>
+            Angaben gemäß § 5 DDG:<br>
+            <strong>ZEITRISS – Filmprojekt</strong><br>
+            Vertreten durch: Lovis Noah Glinka &amp; Hannes<br>
+            Manfred-Schöne-Str. 12<br>
+            57462 Olpe, Deutschland
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kontakt &amp; Verantwortlichkeit</h4>
+          <p>
+            E-Mail: kontakt@zeitriss-filmprojekt.de<br><br>
+            Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:<br>
+            Lovis Noah Glinka, Manfred-Schöne-Str. 12, 57462 Olpe
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Datenschutz &amp; Cookies</h4>
+          <p>
+            Diese Website nutzt technisch notwendige Speicherelemente sowie nach Ihrer Einwilligung externe Medien von YouTube. Ihre Entscheidung können Sie jederzeit hier anpassen:
+          </p>
+          <p style="margin-top: 0.75rem;">
+            <button type="button" class="cookie-reopen-link" id="openCookieSettings">
+              Cookie-Einstellungen öffnen / widerrufen
+            </button>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 ZEITRISS-FILMPROJEKT. Alle Rechte vorbehalten.</span>
+        <span>Historischer Kurzfilm &bull; Olpe 1932–1945</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FUNKTIONIERENDES COOKIE-BANNER -->
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie-Einstellungen">
+    <div class="cookie-text">
+      <h4>Datenschutz &amp; Externe Medien</h4>
+      <p>
+        Wir verwenden Cookies und lokale Speicherfunktionen, um Ihre Auswahl zu speichern und – sofern Sie zustimmen – den eingebetteten YouTube-Trailer direkt auf dieser Seite abzuspielen. Sie können selbst entscheiden, ob externe Medien geladen werden dürfen.
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn-secondary btn-sm" id="acceptEssentialBtn">
+        Nur Essenzielle
+      </button>
+      <button type="button" class="btn btn-primary btn-sm" id="acceptAllBtn">
+        Alle akzeptieren (inkl. Video)
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT FÜR FUNKTIONIERENDE COOKIES & YOUTUBE EMBED -->
+  <script>
+    (function() {
+      const CONSENT_KEY = 'zeitriss_cookie_consent';
+      const YOUTUBE_VIDEO_ID = 'h8yn_eX1yQo';
+
+      const cookieBanner = document.getElementById('cookieBanner');
+      const acceptAllBtn = document.getElementById('acceptAllBtn');
+      const acceptEssentialBtn = document.getElementById('acceptEssentialBtn');
+      const enableVideoBtn = document.getElementById('enableVideoBtn');
+      const openCookieSettings = document.getElementById('openCookieSettings');
+      const videoContainer = document.getElementById('videoContainer');
+      const videoPlaceholder = document.getElementById('videoPlaceholder');
+
+      // Hilfsfunktion: Setzt sowohl ein echtes Browser-Cookie als auch localStorage
+      function setConsent(value) {
+        localStorage.setItem(CONSENT_KEY, value);
+        const expires = new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toUTCString(); // 180 Tage
+        document.cookie = `${CONSENT_KEY}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+      }
+
+      function getConsent() {
+        return localStorage.getItem(CONSENT_KEY);
+      }
+
+      // Lädt das YouTube-Iframe (nocookie-Domain für maximalen Datenschutz)
+      function loadYouTubeVideo() {
+        if (document.getElementById('ytIframe')) return;
+        if (videoPlaceholder) {
+          videoPlaceholder.style.display = 'none';
+        }
+        const iframe = document.createElement('iframe');
+        iframe.id = 'ytIframe';
+        iframe.src = `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?rel=0&modestbranding=1`;
+        iframe.title = 'ZEITRISS – Offizieller Trailer';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        videoContainer.appendChild(iframe);
+      }
+
+      // Entfernt das YouTube-Iframe wieder, falls der Nutzer widerruft
+      function unloadYouTubeVideo() {
+        const existingIframe = document.getElementById('ytIframe');
+        if (existingIframe) {
+          existingIframe.remove();
+        }
+        if (videoPlaceholder) {
+          videoPlaceholder.style.display = 'flex';
+        }
+      }
+
+      // Initialer Check beim Laden der Seite
+      const currentConsent = getConsent();
+      if (!currentConsent) {
+        setTimeout(() => cookieBanner.classList.add('active'), 400);
+      } else if (currentConsent === 'all') {
+        loadYouTubeVideo();
+      }
+
+      // Klick auf "Alle akzeptieren"
+      acceptAllBtn.addEventListener('click', () => {
+        setConsent('all');
+        cookieBanner.classList.remove('active');
+        loadYouTubeVideo();
+      });
+
+      // Klick auf "Nur Essenzielle"
+      acceptEssentialBtn.addEventListener('click', () => {
+        setConsent('essential');
+        cookieBanner.classList.remove('active');
+        unloadYouTubeVideo();
+      });
+
+      // Klick direkt im Video-Platzhalter auf "Video aktivieren"
+      enableVideoBtn.addEventListener('click', () => {
+        setConsent('all');
+        cookieBanner.classList.remove('active');
+        loadYouTubeVideo();
+      });
+
+      // Klick im Impressum auf "Cookie-Einstellungen öffnen / widerrufen"
+      openCookieSettings.addEventListener('click', () => {
+        cookieBanner.classList.add('active');
+      });
+    })();
+  </script>
+</body>
+</html>
